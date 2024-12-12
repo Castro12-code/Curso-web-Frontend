@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { GmailService } from '../../services/gmail.service';
 import { Email } from '../../interfaces/response-email.interface';
