@@ -2,31 +2,17 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Define el puerto dinámico para el entorno de producción o un valor por defecto (8000)
-const PORT = process.env.PORT || 8000;
+// Servir las carpetas estáticas
+app.use('/src', express.static(path.join(__dirname, 'src')));
+app.use('/src/email', express.static(path.join(__dirname, 'src', 'email')));
 
-// Ruta al archivo src/index.html
-const indexPath = path.join(__dirname, 'src', 'index.html');
-
-// Verifica si el archivo index.html existe
-if (!require('fs').existsSync(indexPath)) {
-  console.error(`Error: No se encontró index.html en la ruta: ${indexPath}`);
-  process.exit(1); // Termina el proceso si no encuentra el archivo
-}
-
-// Sirve el archivo src/index.html para todas las rutas
+// Ruta principal para el index.html
 app.get('*', (req, res) => {
-  res.sendFile(indexPath, (err) => {
-    if (err) {
-      console.error('Error al enviar index.html:', err);
-      res.status(500).send('Error al cargar la aplicación.');
-    }
-  });
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-// Inicia el servidor
 app.listen(PORT, () => {
-  console.log(`Angular app is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
-
